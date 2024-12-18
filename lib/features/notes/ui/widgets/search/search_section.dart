@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/widgets/custom_animated_icon.dart';
+import '../../../../../core/widgets/custom_animated_icon.dart';
 import 'recent_search_section.dart';
 
 class SearchSection extends StatefulWidget {
