@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "903008121747",
+    "project_id": "note-task-1d26a",
+    "storage_bucket": "note-task-1d26a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:903008121747:android:df2839f8bf7aba14c66e66",
+        "android_client_info": {
+          "package_name": "dev.zayan.note_task"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWhNiCuT2uafDKEDNjJFX3e3y-sVgrFu8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
