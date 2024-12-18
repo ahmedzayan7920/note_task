@@ -34,7 +34,14 @@ class _NoteDialogState extends State<NoteDialog> {
               bodyController: bodyController,
             ),
             const SizedBox(height: 16),
-            NoteDialogContentColors(selectedColorIndex: selectedColorIndex),
+            NoteDialogContentColors(
+              selectedColorIndex: selectedColorIndex,
+              onTap: (index) {
+                setState(() {
+                  selectedColorIndex = index;
+                });
+              },
+            ),
           ],
         ),
       ),

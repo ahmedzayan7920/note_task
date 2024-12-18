@@ -10,7 +10,7 @@ class NoteDialogContentColors extends StatelessWidget {
   });
 
   final int selectedColorIndex;
-  final void Function()? onTap;
+  final void Function(int index)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class NoteDialogContentColors extends StatelessWidget {
           itemBuilder: (context, index) {
             final color = NoteColor.values[index];
             return GestureDetector(
-              onTap: onTap,
+              onTap:()=> onTap?.call(index),
               child: Container(
                 width: 40,
                 height: 40,
