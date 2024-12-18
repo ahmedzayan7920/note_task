@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../widgets/search_section.dart';
+import '../widgets/note_dialog/note_dialog.dart';
+import '../widgets/search/search_section.dart';
 
 class NotesView extends StatelessWidget {
   const NotesView({super.key});
@@ -18,6 +18,17 @@ class NotesView extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return const NoteDialog();
+            },
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
