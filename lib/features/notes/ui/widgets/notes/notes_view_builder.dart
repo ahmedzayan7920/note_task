@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:note_task/core/enums/note_color.dart';
+import 'package:note_task/features/notes/models/note_model.dart';
 
 import '../../../logic/notes/notes_cubit.dart';
 import '../../../logic/notes/notes_state.dart';
-import 'package:note_task/features/notes/models/note_model.dart';
-
 import 'note_bottom_sheet.dart';
 
 class NotesViewBuilder extends StatelessWidget {
@@ -22,23 +22,51 @@ class NotesViewBuilder extends StatelessWidget {
             child: Text(state.message),
           );
         } else if (state is NotesSuccessState) {
-          return ListView.builder(
-            itemCount: state.notes.length,
-            itemBuilder: (context, index) {
-              final note = state.notes[index];
-              return GestureDetector(
-                onTap: () {
-                  _showNoteBottomSheet(context, note);
-                },
-                child: Card(
-                  color: note.color.getColor,
-                  child: ListTile(
-                    title: Text(note.title),
-                    subtitle: Text(note.body),
+          return SingleChildScrollView(
+            child: StaggeredGrid.count(
+              crossAxisCount: 2,
+              mainAxisSpacing: 8,
+              crossAxisSpacing: 8,
+              children: List.generate(state.notes.length, (index) {
+                final note = state.notes[index];
+
+                return StaggeredGridTile.fit(
+                  crossAxisCellCount: 1,
+                  child: GestureDetector(
+                    onTap: () {
+                      _showNoteBottomSheet(context, note);
+                    },
+                    child: Card(
+                      color: note.color.getColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              note.title,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              note.body,
+                              style: const TextStyle(fontSize: 14),
+                              maxLines: 6,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              }),
+            ),
           );
         }
         return const Center(
@@ -53,6 +81,7 @@ class NotesViewBuilder extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
+      isDismissible: false,
       builder: (context) {
         return NoteBottomSheet(note: note);
       },
