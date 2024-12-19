@@ -21,6 +21,10 @@ final class NotesFailureState extends NotesState {
 }
 
 final class NotesSuccessState extends NotesState {
-  const NotesSuccessState({required this.notes});
+  const NotesSuccessState({
+    required this.notes,
+    required this.recentSearches,
+  });
   final List<NoteModel> notes;
+  final List<String> recentSearches;
 }
