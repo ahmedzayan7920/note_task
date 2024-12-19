@@ -29,6 +29,10 @@ class NotesCubit extends Cubit<NotesState> {
     });
   }
 
+  void pinNote({required NoteModel note}) {
+    _noteRepository.updateNote(note: note.copyWith(isPinned: !note.isPinned));
+  }
+
   @override
   Future<void> close() {
     _notesStreamSubscription?.cancel();
