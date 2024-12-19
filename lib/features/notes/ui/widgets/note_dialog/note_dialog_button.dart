@@ -44,6 +44,7 @@ class NoteDialogButton extends StatelessWidget {
         body: bodyController.text,
         color: NoteColor.values[selectedColorIndex],
         createdAt: note?.createdAt ?? DateTime.now(),
+        isPinned: note?.isPinned ?? false,
       );
       note != null
           ? context.read<AddOrUpdateNoteCubit>().updateNote(note: newNote)
