@@ -6,12 +6,15 @@ class NoteModel {
   final String body;
   final NoteColor color;
   final DateTime createdAt;
+  final bool isPinned;
+
   NoteModel({
     required this.id,
     required this.title,
     required this.body,
     required this.color,
     required this.createdAt,
+    required this.isPinned,
   });
 
   NoteModel copyWith({
@@ -20,6 +23,7 @@ class NoteModel {
     String? body,
     NoteColor? color,
     DateTime? createdAt,
+    bool? isPinned,
   }) {
     return NoteModel(
       id: id ?? this.id,
@@ -27,6 +31,7 @@ class NoteModel {
       body: body ?? this.body,
       color: color ?? this.color,
       createdAt: createdAt ?? this.createdAt,
+      isPinned: isPinned ?? this.isPinned,
     );
   }
 
@@ -37,25 +42,27 @@ class NoteModel {
       'body': body,
       'color': color.name,
       'createdAt': createdAt.millisecondsSinceEpoch,
+      'isPinned': isPinned,
     };
   }
 
   factory NoteModel.fromJson(Map<String, dynamic> map) {
     return NoteModel(
-      id: map['id'] as String,
-      title: map['title'] as String,
-      body: map['body'] as String,
+      id: map['id'] ?? '',
+      title: map['title'] ?? '',
+      body: map['body'] ?? '',
       color: NoteColor.values.firstWhere(
-        (element) => element.name == map['color'] as String,
+        (element) => element.name == map['color'],
         orElse: () => NoteColor.teal,
       ),
-      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] as int),
+      createdAt: DateTime.fromMillisecondsSinceEpoch(map['createdAt'] ?? 0),
+      isPinned: map['isPinned']?? false,
     );
   }
 
   @override
   String toString() {
-    return 'NoteModel(id: $id, title: $title, body: $body, color: $color, createdAt: $createdAt)';
+    return 'NoteModel(id: $id, title: $title, body: $body, color: $color, createdAt: $createdAt, isPinned: $isPinned)';
   }
 
   @override
@@ -66,7 +73,8 @@ class NoteModel {
         other.title == title &&
         other.body == body &&
         other.color == color &&
-        other.createdAt == createdAt;
+        other.createdAt == createdAt &&
+        other.isPinned == isPinned;
   }
 
   @override
@@ -75,6 +83,7 @@ class NoteModel {
         title.hashCode ^
         body.hashCode ^
         color.hashCode ^
-        createdAt.hashCode;
+        createdAt.hashCode ^
+        isPinned.hashCode;
   }
 }
