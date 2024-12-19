@@ -29,4 +29,13 @@ class AddOrUpdateNoteCubit extends Cubit<AddOrUpdateNoteState> {
       (_) => emit(const AddOrUpdateNoteSuccessState()),
     );
   }
+
+  deleteNote({required String noteId}) async {
+    emit(const AddOrUpdateNoteLoadingState());
+    final result = await _noteRepository.deleteNote(noteId: noteId);
+    result.fold(
+      (failure) => emit(AddOrUpdateNoteFailureState(message: failure.message)),
+      (_) => emit(const AddOrUpdateNoteSuccessState()),
+    );
+  }
 }
