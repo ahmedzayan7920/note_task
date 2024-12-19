@@ -1,11 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:note_task/core/enums/note_color.dart';
 import 'package:note_task/features/notes/logic/add_or_update_note/add_or_update_note_cubit.dart';
-import 'package:note_task/features/notes/repos/note_repository.dart';
 
+import '../../../../../core/di/di.dart';
 import '../../../logic/add_or_update_note/add_or_update_note_state.dart';
 import '../../../models/note_model.dart';
 import 'note_bottom_sheet_header.dart';
@@ -21,9 +20,7 @@ class NoteBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddOrUpdateNoteCubit(
-        noteRepository: NoteRepository(
-          firestore: FirebaseFirestore.instance,
-        ),
+        noteRepository: getIt(),
       ),
       child: BlocConsumer<AddOrUpdateNoteCubit, AddOrUpdateNoteState>(
         listener: (context, state) {

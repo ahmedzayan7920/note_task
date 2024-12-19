@@ -1,8 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:note_task/features/notes/repos/note_repository.dart';
 
+import '../../../../core/di/di.dart';
 import '../../logic/notes/notes_cubit.dart';
 import '../widgets/note_dialog/note_dialog.dart';
 import '../widgets/notes/notes_view_builder.dart';
@@ -15,9 +14,8 @@ class NotesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => NotesCubit(
-        noteRepository: NoteRepository(
-          firestore: FirebaseFirestore.instance,
-        ),
+        noteRepository: getIt(),
+        sharedPreferences: getIt(),
       )..fetchNotes(),
       child: Scaffold(
         backgroundColor: Colors.grey[300],

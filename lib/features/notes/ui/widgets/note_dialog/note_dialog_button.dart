@@ -47,8 +47,8 @@ class NoteDialogButton extends StatelessWidget {
         isPinned: note?.isPinned ?? false,
       );
       note != null
-          ? context.read<AddOrUpdateNoteCubit>().updateNote(note: newNote)
-          : context.read<AddOrUpdateNoteCubit>().addNote(note: newNote);
+          ? BlocProvider.of<AddOrUpdateNoteCubit>(context).updateNote(note: newNote)
+          : BlocProvider.of<AddOrUpdateNoteCubit>(context).addNote(note: newNote);
     }
   }
 }
