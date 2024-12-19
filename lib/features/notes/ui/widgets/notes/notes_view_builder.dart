@@ -30,37 +30,52 @@ class NotesViewBuilder extends StatelessWidget {
               children: List.generate(state.notes.length, (index) {
                 final note = state.notes[index];
 
-                return StaggeredGridTile.fit(
-                  crossAxisCellCount: 1,
-                  child: GestureDetector(
-                    onTap: () {
-                      _showNoteBottomSheet(context, note);
-                    },
-                    child: Card(
-                      color: note.color.getColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              note.title,
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                return GestureDetector(
+                  onTap: () {
+                    _showNoteBottomSheet(context, note);
+                  },
+                  child: Card(
+                    color: note.color.getColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  note.title,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              note.body,
-                              style: const TextStyle(fontSize: 14),
-                              maxLines: 6,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
+                              GestureDetector(
+                                onTap: () {
+                                  context
+                                      .read<NotesCubit>()
+                                      .pinNote(note: note);
+                                },
+                                child: Icon(
+                                  note.isPinned
+                                      ? Icons.push_pin
+                                      : Icons.push_pin_outlined,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            note.body,
+                            style: const TextStyle(fontSize: 14),
+                            maxLines: 6,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                       ),
                     ),
                   ),
