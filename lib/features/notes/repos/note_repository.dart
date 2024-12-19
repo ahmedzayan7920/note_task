@@ -34,6 +34,16 @@ class NoteRepository {
     }
   }
 
+  Future<Either<Failure, Unit>> deleteNote({required String noteId}) async {
+    try {
+      final docRef = _firestore.collection(FirebaseConstants.notes).doc(noteId);
+      await docRef.delete();
+      return Either.right(const Unit());
+    } catch (e) {
+      return Either.left(Failure.fromException(e));
+    }
+  }
+
   Stream<Either<Failure, List<NoteModel>>> fetchNotes() async* {
     try {
       final noteStream = _firestore
