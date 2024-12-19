@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/widgets/custom_animated_icon.dart';
+import '../../../logic/notes/notes_cubit.dart';
 import 'recent_search_section.dart';
 
 class SearchSection extends StatefulWidget {
@@ -85,7 +87,14 @@ class _SearchSectionState extends State<SearchSection>
                   ],
                 ),
                 if (isSearchExpanded)
-                  RecentSearchSection(animation: _animation),
+                  RecentSearchSection(
+                    animation: _animation,
+                    onTap: (query) {
+                      _searchController.text = query;
+                      BlocProvider.of<NotesCubit>(context)
+                          .searchNotes(query: query);
+                    },
+                  ),
               ],
             ),
           );
@@ -110,6 +119,11 @@ class _SearchSectionState extends State<SearchSection>
       } else if (status == AnimationStatus.dismissed) {
         setState(() => isSearchExpanded = false);
       }
+    });
+
+    _searchController.addListener(() {
+      BlocProvider.of<NotesCubit>(context)
+          .searchNotes(query: _searchController.text);
     });
   }
 

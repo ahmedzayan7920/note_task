@@ -15,9 +15,11 @@ class RecentSearchItem extends StatelessWidget {
         children: [
           const Icon(Icons.access_time, color: Colors.grey),
           const SizedBox(width: 16),
-          Text(
-            title,
-            style: const TextStyle(color: Colors.black),
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(color: Colors.black),
+            ),
           ),
         ],
       ),
