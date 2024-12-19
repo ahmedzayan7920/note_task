@@ -25,7 +25,8 @@ class NoteRepository {
 
   Future<Either<Failure, Unit>> updateNote({required NoteModel note}) async {
     try {
-      final docRef = _firestore.collection(FirebaseConstants.notes).doc(note.id);
+      final docRef =
+          _firestore.collection(FirebaseConstants.notes).doc(note.id);
       await docRef.set(note.toJson());
       return Either.right(const Unit());
     } catch (e) {
@@ -35,8 +36,10 @@ class NoteRepository {
 
   Stream<Either<Failure, List<NoteModel>>> fetchNotes() async* {
     try {
-      final noteStream =
-          _firestore.collection(FirebaseConstants.notes).snapshots();
+      final noteStream = _firestore
+          .collection(FirebaseConstants.notes)
+          .orderBy("createdAt", descending: true)
+          .snapshots();
       await for (final snapshot in noteStream) {
         final notes =
             snapshot.docs.map((doc) => NoteModel.fromJson(doc.data())).toList();
