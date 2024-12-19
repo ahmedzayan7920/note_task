@@ -48,6 +48,7 @@ class NoteRepository {
     try {
       final noteStream = _firestore
           .collection(FirebaseConstants.notes)
+          .orderBy("isPinned", descending: true)
           .orderBy("createdAt", descending: true)
           .snapshots();
       await for (final snapshot in noteStream) {
