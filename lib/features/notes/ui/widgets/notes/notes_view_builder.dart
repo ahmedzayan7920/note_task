@@ -32,6 +32,7 @@ class NotesViewBuilder extends StatelessWidget {
 
                 return GestureDetector(
                   onTap: () {
+                    BlocProvider.of<NotesCubit>(context).saveRecentQuery();
                     _showNoteBottomSheet(context, note);
                   },
                   child: Card(
